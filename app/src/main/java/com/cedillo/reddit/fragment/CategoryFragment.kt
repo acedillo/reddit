@@ -14,8 +14,6 @@ import com.cedillo.reddit.R
 import com.cedillo.reddit.RetrofitRepository
 import com.cedillo.reddit.model.Data
 
-
-
 class CategoryFragment : Fragment(){
 
     private var viewModel : HomeViewModel? = null

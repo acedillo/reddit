@@ -3,6 +3,8 @@ package com.cedillo.reddit
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -36,6 +38,14 @@ class HomeActivity : AppCompatActivity() {
                 .add(R.id.homeContentContainer, CategoryFragment.newInstance(it))
                 .addToBackStack(CategoryFragment::class.java.name)
                 .commit()
+        })
+
+        viewModel.loading.observe(this, Observer {
+            findViewById<TextView>(R.id.homeLoading).visibility = if (it) View.VISIBLE else View.GONE
+        })
+
+        viewModel.notFound.observe(this, Observer {
+            Toast.makeText(this, getString(R.string.not_found), Toast.LENGTH_SHORT).show()
         })
 
     }

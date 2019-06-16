@@ -8,14 +8,14 @@ import kotlinx.coroutines.withContext
 
 class HomeViewModel(val repository: Repository) : ViewModel() {
 
-    private val _spinner = MutableLiveData<Boolean>()
+    private val _loading = MutableLiveData<Boolean>()
     private val _mainRedditList = MutableLiveData<List<Data>>()
     private val _subRedditList = MutableLiveData<List<Data>>()
     private val _post = MutableLiveData<Data>()
+    private val _notFound = MutableLiveData<Boolean>()
 
-
-    val spinner : LiveData<Boolean>
-    get() = _spinner
+    val loading : LiveData<Boolean>
+    get() = _loading
 
     val mainRedditList : LiveData<List<Data>>
     get() = _mainRedditList
@@ -25,6 +25,9 @@ class HomeViewModel(val repository: Repository) : ViewModel() {
 
     val post : LiveData<Data>
     get() = _post
+
+    val notFound : LiveData<Boolean>
+    get() = _notFound
 
 
     companion object {
@@ -53,19 +56,27 @@ class HomeViewModel(val repository: Repository) : ViewModel() {
     }
 
     suspend fun loadMain(){
+        _loading.postValue(true)
         return withContext(Dispatchers.IO) {
             val mainReddit = repository.getMainReddit()
             val list = mainReddit.data?.children?.map { it.data!! }
             _mainRedditList.postValue(list)
+            _loading.postValue(false)
 
         }
     }
 
     suspend fun loadSubreddit(subReddit: String){
+        _loading.postValue(true)
         return withContext(Dispatchers.IO) {
             val mainReddit = repository.getSubreddit(subReddit)
             val list = mainReddit.data?.children?.map { it.data!! }
-            _subRedditList.postValue(list!!)
+            if(list!!.isEmpty()){
+                _notFound.postValue(true)
+            }else {
+                _subRedditList.postValue(list!!)
+            }
+            _loading.postValue(false)
 
         }
     }

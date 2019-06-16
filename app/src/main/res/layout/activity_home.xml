@@ -6,12 +6,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".HomeActivity">
-
     <FrameLayout
-            android:id="@+id/homeContentContainer"
             android:layout_above="@id/homeSearchBar"
+            android:id="@+id/mainContainer"
+            android:background="@color/white"
+            android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/homeContentContainer"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <TextView
+                android:id="@+id/homeLoading"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:background="@color/white"
+                android:text="@string/loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </FrameLayout>
 
     <LinearLayout
             android:id="@+id/homeSearchBar"

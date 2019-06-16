@@ -5,7 +5,6 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-
     <LinearLayout
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
@@ -25,7 +24,7 @@
         <ImageView
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/postImage"
-                android:layout_width="300dp"
-                android:layout_height="300dp"/>
+                android:layout_width="@dimen/img_width"
+                android:layout_height="@dimen/img_height"/>
     </LinearLayout>
 </ScrollView>
