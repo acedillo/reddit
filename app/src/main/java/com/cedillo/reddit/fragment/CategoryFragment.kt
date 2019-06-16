@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cedillo.reddit.CategoryAdapter
@@ -46,17 +44,13 @@ class CategoryFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_category, container, false)
         list = view.findViewById(R.id.list)
-        val itemDecorator = DividerItemDecoration(context!!, DividerItemDecoration.VERTICAL)
-        itemDecorator.setDrawable(ContextCompat.getDrawable(context!!, R.drawable.divider)!!)
         list?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         list?.adapter = CategoryAdapter(arguments!![ARG_DATA_LIST] as ArrayList<Data>,
         object : CategoryAdapter.Listener{
             override fun onItemSelected(data: Data) {
                 viewModel?.onPostSelected(data)
             }
-
         })
-        list?.addItemDecoration(itemDecorator)
         return view
     }
 }
