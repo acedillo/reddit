@@ -1,12 +1,13 @@
 package com.cedillo.reddit
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.cedillo.reddit.fragment.CategoryFragment
+import com.cedillo.reddit.fragment.PostFragment
 import com.cedillo.reddit.model.Data
 
 class HomeActivity : AppCompatActivity() {
@@ -16,22 +17,37 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        viewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory{
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-               return HomeViewModel(RetrofitRepository()) as T
-            }
+        viewModel = ViewModelProviders.of(this, HomeViewModel.getFactory(RetrofitRepository())).get(HomeViewModel::class.java)
 
-        }).get(HomeViewModel::class.java)
-
-        viewModel.dataList.observe(this, Observer<List<Data>> {
-            Log.d("TAG", "list ${it.size}")
+        viewModel.mainRedditList.observe(this, Observer<List<Data>> {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.homeContentContainer, CategoryFragment.newInstance(it)).commit()
         })
+
+        viewModel.post.observe(this, Observer {
+            supportFragmentManager.beginTransaction().
+                add(R.id.homeContentContainer, PostFragment.newInstance(it))
+                .addToBackStack(PostFragment::class.java.name)
+                .commit()
+        })
+
+        viewModel.subRedditList.observe(this, Observer<List<Data>> {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.homeContentContainer, CategoryFragment.newInstance(it))
+                .addToBackStack(CategoryFragment::class.java.name)
+                .commit()
+        })
+
     }
 
     override fun onStart() {
         super.onStart()
         viewModel.getMain()
 
+    }
+
+    fun onSearchClick(v : View){
+        viewModel.onSearchClick(findViewById<EditText>(R.id.homeSearchText).text.toString())
     }
 
 

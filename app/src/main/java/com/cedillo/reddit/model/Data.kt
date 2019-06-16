@@ -1,6 +1,14 @@
 package com.cedillo.reddit.model
 
-data class Data (var subreddit : String? = null,
-                         var title : String? = null,
-                         var thubnail : String? = null,
-                         var permalink : String? = null)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Data(
+    var subreddit: String? = null,
+    var title: String? = null,
+    var thumbnail: String? = null,
+    var permalink: String? = null,
+    var url: String?,
+    var selftext_html: String? = null
+) : Parcelable
