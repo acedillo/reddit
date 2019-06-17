@@ -15,7 +15,7 @@ class PostFragment : Fragment() {
 
     companion object {
         private const val ARG_POST = "arg.post"
-        fun newInstance(data : Data) : PostFragment{
+        fun newInstance(data: Data): PostFragment {
             val fragment = PostFragment()
             val args = Bundle()
             args.putParcelable(ARG_POST, data)
@@ -28,9 +28,8 @@ class PostFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_post, container, false)
 
         val data = arguments!![ARG_POST] as Data
-        data.selftext_html?.let{
-            view.findViewById<TextView>(R.id.postText).
-                text = Html.fromHtml(data.selftext_html)
+        data.selftext_html?.let {
+            view.findViewById<TextView>(R.id.postText).text = Html.fromHtml(data.selftext_html)
         }
 
         view.findViewById<TextView>(R.id.postTitle).text = data.title

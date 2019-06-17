@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cedillo.reddit.model.Data
 import com.cedillo.reddit.util.ImageLoader
 
-class CategoryAdapter(val list : List<Data>, val listener : Listener?) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(private val list: List<Data>, private val listener: Listener?) :
+    RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val data = list[position]
@@ -17,7 +18,7 @@ class CategoryAdapter(val list : List<Data>, val listener : Listener?) : Recycle
         holder.title.text = data.title
         if (data.thumbnail == null || data.thumbnail!!.isEmpty()) {
             holder.imageView.visibility = View.GONE
-        }else {
+        } else {
             holder.imageView.visibility = View.VISIBLE
             ImageLoader.loadImage(holder.imageView, data.thumbnail)
         }
@@ -30,17 +31,17 @@ class CategoryAdapter(val list : List<Data>, val listener : Listener?) : Recycle
     }
 
     override fun getItemCount(): Int {
-       return list.size
+        return list.size
     }
 
-    class CategoryViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val title : TextView = itemView.findViewById(R.id.postRowTitle)
-        val category : TextView = itemView.findViewById(R.id.postRowCategory)
-        val imageView : ImageView = itemView.findViewById(R.id.postRowImg)
+        val title: TextView = itemView.findViewById(R.id.postRowTitle)
+        val category: TextView = itemView.findViewById(R.id.postRowCategory)
+        val imageView: ImageView = itemView.findViewById(R.id.postRowImg)
     }
 
-    interface Listener{
-        fun onItemSelected(data : Data)
+    interface Listener {
+        fun onItemSelected(data: Data)
     }
 }

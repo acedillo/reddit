@@ -22,16 +22,16 @@ class HomeViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
-    private lateinit var repository : Repository
+    private lateinit var repository: Repository
 
     @Before
-    fun setup(){
+    fun setup() {
         repository = Mockito.mock(Repository::class.java)
         Mockito.`when`(repository.getMainReddit()).thenReturn(Gson().fromJson(loadFile(), Main::class.java))
         Mockito.`when`(repository.getSubreddit(anyObject())).thenReturn(Gson().fromJson(loadFile(), Main::class.java))
 
     }
-    
+
 
     @Test
     fun loadMain() {
@@ -41,7 +41,7 @@ class HomeViewModelTest {
             assertTrue(viewModel.loading.value!!)
             job.join()
             assertFalse(viewModel.loading.value!!)
-            assertEquals(26 ,viewModel.mainRedditList.value?.size)
+            assertEquals(26, viewModel.mainRedditList.value?.size)
         }
     }
 
@@ -52,7 +52,7 @@ class HomeViewModelTest {
             val job = viewModel.onSearchClick("d")
             job?.join()
             assert(viewModel.loading.value == false)
-            assertEquals(26 ,viewModel.subRedditList.value?.size)
+            assertEquals(26, viewModel.subRedditList.value?.size)
         }
     }
 
@@ -91,8 +91,7 @@ class HomeViewModelTest {
     }
 
 
-
-    private fun loadFile() : String{
+    private fun loadFile(): String {
         val `is` = FileInputStream("src/test/resources/funny.json")
         val buf = BufferedReader(InputStreamReader(`is`))
 
@@ -106,7 +105,7 @@ class HomeViewModelTest {
         return sb.toString()
     }
 
-    private fun <T>anyObject(): T{
+    private fun <T> anyObject(): T {
         return Mockito.any<T>()
     }
 }

@@ -14,12 +14,13 @@ import com.cedillo.reddit.model.Data
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : HomeViewModel
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        viewModel = ViewModelProviders.of(this, HomeViewModel.getFactory(RetrofitRepository())).get(HomeViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, HomeViewModel.getFactory(RetrofitRepository())).get(HomeViewModel::class.java)
 
         viewModel.mainRedditList.observe(this, Observer<List<Data>> {
             supportFragmentManager.beginTransaction()
@@ -27,8 +28,7 @@ class HomeActivity : AppCompatActivity() {
         })
 
         viewModel.post.observe(this, Observer {
-            supportFragmentManager.beginTransaction().
-                add(R.id.homeContentContainer, PostFragment.newInstance(it))
+            supportFragmentManager.beginTransaction().add(R.id.homeContentContainer, PostFragment.newInstance(it))
                 .addToBackStack(PostFragment::class.java.name)
                 .commit()
         })
@@ -56,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    fun onSearchClick(v : View){
+    fun onSearchClick(v: View) {
         viewModel.onSearchClick(findViewById<EditText>(R.id.homeSearchText).text.toString())
     }
 

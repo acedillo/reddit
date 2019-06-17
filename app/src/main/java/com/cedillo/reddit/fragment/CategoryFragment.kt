@@ -14,16 +14,16 @@ import com.cedillo.reddit.R
 import com.cedillo.reddit.RetrofitRepository
 import com.cedillo.reddit.model.Data
 
-class CategoryFragment : Fragment(){
+class CategoryFragment : Fragment() {
 
-    private var viewModel : HomeViewModel? = null
-    private var list : RecyclerView? = null
+    private var viewModel: HomeViewModel? = null
+    private var list: RecyclerView? = null
 
     companion object {
 
         private const val ARG_DATA_LIST = "arg.data.list"
 
-        fun newInstance(dataList : List<Data>) : CategoryFragment {
+        fun newInstance(dataList: List<Data>): CategoryFragment {
             val categoryFragment = CategoryFragment()
             val args = Bundle()
 
@@ -35,7 +35,8 @@ class CategoryFragment : Fragment(){
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(activity!!, HomeViewModel.getFactory(RetrofitRepository())).get(HomeViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, HomeViewModel.getFactory(RetrofitRepository()))
+            .get(HomeViewModel::class.java)
         super.onCreate(savedInstanceState)
     }
 
@@ -44,11 +45,11 @@ class CategoryFragment : Fragment(){
         list = view.findViewById(R.id.list)
         list?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         list?.adapter = CategoryAdapter(arguments!![ARG_DATA_LIST] as ArrayList<Data>,
-        object : CategoryAdapter.Listener{
-            override fun onItemSelected(data: Data) {
-                viewModel?.onPostSelected(data)
-            }
-        })
+            object : CategoryAdapter.Listener {
+                override fun onItemSelected(data: Data) {
+                    viewModel?.onPostSelected(data)
+                }
+            })
         return view
     }
 }
