@@ -2,11 +2,17 @@ package com.cedillo.reddit
 
 import androidx.lifecycle.*
 import com.cedillo.reddit.model.Data
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
-class HomeViewModel(val repository: Repository) : ViewModel() {
+class HomeViewModel(private val repository: Repository) : ViewModel() {
+
+    private var coroutineScope : CoroutineScope = viewModelScope
+
+    constructor(repository: Repository, coroutineScope : CoroutineScope) : this(repository){
+        this.coroutineScope = coroutineScope
+    }
+
+
 
     private val _loading = MutableLiveData<Boolean>()
     private val _mainRedditList = MutableLiveData<List<Data>>()
@@ -40,23 +46,34 @@ class HomeViewModel(val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getMain() {
-        viewModelScope.launch {
+    fun getMain() : Job {
+        _loading.postValue(true)
+        return coroutineScope.launch {
             loadMain()
         }
     }
 
-    fun getSubReddit(subReddit : String){
+    fun onPostSelected(data: Data) {
+        _post.postValue(data)
+    }
+
+    fun onSearchClick(subReddit: String) : Job? {
+      return getSubReddit(subReddit)
+    }
+
+    private fun getSubReddit(subReddit : String) : Job?{
+
         if(subReddit.isBlank()){
-            return
+            return null
         }
-       viewModelScope.launch {
+        _loading.postValue(true)
+       return coroutineScope.launch {
            loadSubreddit(subReddit)
        }
     }
 
-    suspend fun loadMain(){
-        _loading.postValue(true)
+    private suspend fun loadMain(){
+
         return withContext(Dispatchers.IO) {
             val mainReddit = repository.getMainReddit()
             val list = mainReddit.data?.children?.map { it.data!! }
@@ -66,8 +83,8 @@ class HomeViewModel(val repository: Repository) : ViewModel() {
         }
     }
 
-    suspend fun loadSubreddit(subReddit: String){
-        _loading.postValue(true)
+    private suspend fun loadSubreddit(subReddit: String){
+
         return withContext(Dispatchers.IO) {
             val mainReddit = repository.getSubreddit(subReddit)
             val list = mainReddit.data?.children?.map { it.data!! }
@@ -80,14 +97,5 @@ class HomeViewModel(val repository: Repository) : ViewModel() {
 
         }
     }
-
-    fun onPostSelected(data: Data) {
-        _post.postValue(data)
-    }
-
-    fun onSearchClick(subReddit: String) {
-        getSubReddit(subReddit)
-    }
-
 
 }

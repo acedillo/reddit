@@ -9,6 +9,6 @@ data class Data(
     var title: String? = null,
     var thumbnail: String? = null,
     var permalink: String? = null,
-    var url: String?,
+    var url: String? = null,
     var selftext_html: String? = null
 ) : Parcelable
