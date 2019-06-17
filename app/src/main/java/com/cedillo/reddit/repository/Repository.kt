@@ -1,4 +1,4 @@
-package com.cedillo.reddit
+package com.cedillo.reddit.repository
 
 import com.cedillo.reddit.model.Main
 

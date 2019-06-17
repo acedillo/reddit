@@ -5,6 +5,7 @@ import com.cedillo.reddit.model.Child
 import com.cedillo.reddit.model.Data
 import com.cedillo.reddit.model.Main
 import com.cedillo.reddit.model.Parent
+import com.cedillo.reddit.repository.Repository
 import com.google.gson.Gson
 import junit.framework.Assert.*
 import kotlinx.coroutines.GlobalScope
@@ -82,11 +83,11 @@ class HomeViewModelTest {
         viewModel.onPostSelected(Data("subReddit", "title", "thumbnail", "perm", "url", "selfText"))
         val value = viewModel.post.value
         assertEquals("subReddit", value!!.subreddit)
-        assertEquals("title", value!!.title)
-        assertEquals("thumbnail", value!!.thumbnail)
-        assertEquals("perm", value!!.permalink)
-        assertEquals("url", value!!.url)
-        assertEquals("selfText", value!!.selftext_html)
+        assertEquals("title", value.title)
+        assertEquals("thumbnail", value.thumbnail)
+        assertEquals("perm", value.permalink)
+        assertEquals("url", value.url)
+        assertEquals("selfText", value.selftext_html)
 
     }
 

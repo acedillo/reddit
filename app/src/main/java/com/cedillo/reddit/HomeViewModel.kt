@@ -2,6 +2,7 @@ package com.cedillo.reddit
 
 import androidx.lifecycle.*
 import com.cedillo.reddit.model.Data
+import com.cedillo.reddit.repository.Repository
 import kotlinx.coroutines.*
 
 class HomeViewModel(private val repository: Repository) : ViewModel() {
@@ -91,7 +92,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
             if(list!!.isEmpty()){
                 _notFound.postValue(true)
             }else {
-                _subRedditList.postValue(list!!)
+                _subRedditList.postValue(list)
             }
             _loading.postValue(false)
 

@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cedillo.reddit.CategoryAdapter
 import com.cedillo.reddit.HomeViewModel
 import com.cedillo.reddit.R
-import com.cedillo.reddit.RetrofitRepository
 import com.cedillo.reddit.model.Data
+import com.cedillo.reddit.repository.RetrofitRepository
 
 class CategoryFragment : Fragment() {
 

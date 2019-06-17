@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.cedillo.reddit.fragment.CategoryFragment
 import com.cedillo.reddit.fragment.PostFragment
 import com.cedillo.reddit.model.Data
+import com.cedillo.reddit.repository.RetrofitRepository
 
 class HomeActivity : AppCompatActivity() {
 
