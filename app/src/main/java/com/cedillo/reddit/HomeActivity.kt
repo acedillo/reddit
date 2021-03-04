@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.cedillo.reddit.fragment.CategoryFragment
 import com.cedillo.reddit.fragment.PostFragment
@@ -21,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         viewModel =
-            ViewModelProviders.of(this, HomeViewModel.getFactory(RetrofitRepository())).get(HomeViewModel::class.java)
+            ViewModelProvider(this, HomeViewModel.getFactory(RetrofitRepository())).get(HomeViewModel::class.java)
 
         viewModel.mainRedditList.observe(this, Observer<List<Data>> {
             supportFragmentManager.beginTransaction()

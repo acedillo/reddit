@@ -11,13 +11,13 @@ class RetrofitRepository : Repository {
         val apiService = ApiClient.getClient().create(ApiInterface::class.java)
         val call = apiService.getSubReddit(subReddit)
         val response = call.execute()
-        return response.body()
+        return response.body()!!
     }
 
     override fun getMainReddit(): Main {
         val apiService = ApiClient.getClient().create(ApiInterface::class.java)
         val call = apiService.getMainPosts()
         val response = call.execute()
-        return response.body()
+        return response.body()!!
     }
 }
