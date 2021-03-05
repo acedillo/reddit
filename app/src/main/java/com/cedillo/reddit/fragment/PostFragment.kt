@@ -27,7 +27,7 @@ class PostFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_post, container, false)
 
-        val data = arguments!![ARG_POST] as Data
+        val data = requireArguments()[ARG_POST] as Data
         data.selftext_html?.let {
             view.findViewById<TextView>(R.id.postText).text = Html.fromHtml(data.selftext_html)
         }

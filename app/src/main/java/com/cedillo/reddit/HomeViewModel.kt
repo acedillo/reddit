@@ -13,8 +13,6 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
         this.coroutineScope = coroutineScope
     }
 
-
-
     private val _loading = MutableLiveData<Boolean>()
     private val _mainRedditList = MutableLiveData<List<Data>>()
     private val _subRedditList = MutableLiveData<List<Data>>()
@@ -78,7 +76,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
         return withContext(Dispatchers.IO) {
             val mainReddit = repository.getMainReddit()
             val list = mainReddit.data?.children?.map { it.data!! }
-            _mainRedditList.postValue(list)
+            _mainRedditList.postValue(list!!)
             _loading.postValue(false)
 
         }
@@ -92,7 +90,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
             if(list!!.isEmpty()){
                 _notFound.postValue(true)
             }else {
-                _subRedditList.postValue(list)
+                _subRedditList.postValue(list!!)
             }
             _loading.postValue(false)
 

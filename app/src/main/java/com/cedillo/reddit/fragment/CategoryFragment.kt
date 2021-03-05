@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cedillo.reddit.CategoryAdapter
@@ -35,7 +35,7 @@ class CategoryFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(activity!!, HomeViewModel.getFactory(RetrofitRepository()))
+        viewModel = ViewModelProvider(requireActivity(), HomeViewModel.getFactory(RetrofitRepository()))
             .get(HomeViewModel::class.java)
         super.onCreate(savedInstanceState)
     }
@@ -44,7 +44,7 @@ class CategoryFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_category, container, false)
         list = view.findViewById(R.id.list)
         list?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        list?.adapter = CategoryAdapter(arguments!![ARG_DATA_LIST] as ArrayList<Data>,
+        list?.adapter = CategoryAdapter(requireArguments()[ARG_DATA_LIST] as ArrayList<Data>,
             object : CategoryAdapter.Listener {
                 override fun onItemSelected(data: Data) {
                     viewModel?.onPostSelected(data)
